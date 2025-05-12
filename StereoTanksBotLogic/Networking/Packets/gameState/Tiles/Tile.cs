@@ -50,7 +50,8 @@ public record class Tile(bool IsVisible, int? ZoneIndex, Tile.TileEntity[] Entit
     /// <param name="Health">Represents health of player own tank.</param>
     /// <param name="TicksToRadar">Represents time in ticks to regenerate radar.</param>
     /// <param name="IsUsingRadar">Represents radar usage.</param>
-    public record class OwnLightTank(string OwnerId, Direction Direction, OwnLightTankTurret Turret, int? Health, int? TicksToRadar, bool IsUsingRadar) : TileEntity;
+    [JsonConverter(typeof(OwnLightJsonConverter))]
+    public record class OwnLightTank(string OwnerId, Direction Direction, OwnLightTankTurret Turret, int? Health, int? TicksToRadar, bool IsUsingRadar, bool[,] Visibility) : TileEntity;
 
     /// <summary>
     /// Represents own heavy tank tile entity.
@@ -60,7 +61,8 @@ public record class Tile(bool IsVisible, int? ZoneIndex, Tile.TileEntity[] Entit
     /// <param name="Turret">Represents turret of player own heavy tank.</param>
     /// <param name="Health">Represents health of player own tank.</param>
     /// <param name="TicksToMine">Represents time in ticks to regenerate mine.</param>
-    public record class OwnHeavyTank(string OwnerId, Direction Direction, OwnHeavyTankTurret Turret, int? Health, int? TicksToMine) : TileEntity;
+    [JsonConverter(typeof(OwnHeavyTankJsonConverter))]
+    public record class OwnHeavyTank(string OwnerId, Direction Direction, OwnHeavyTankTurret Turret, int? Health, int? TicksToMine, bool[,] Visibility) : TileEntity;
 
     /// <summary>
     /// Represents bullet tile entitiy.

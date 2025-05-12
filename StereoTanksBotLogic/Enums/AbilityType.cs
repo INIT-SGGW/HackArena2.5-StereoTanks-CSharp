@@ -29,4 +29,14 @@ public enum AbilityType
     /// Drops a mine.
     /// </summary>
     DropMine,
+
+    /// <summary>
+    /// Drops a mine.
+    /// </summary>
+    FireHealingBullet,
+
+    /// <summary>
+    /// Drops a mine.
+    /// </summary>
+    FireStunBullet,
 }

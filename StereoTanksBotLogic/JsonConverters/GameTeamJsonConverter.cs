@@ -7,6 +7,7 @@ namespace StereoTanksBotLogic.JsonConverters;
 
 internal class GameTeamJsonConverter : JsonConverter<GameTeam>
 {
+    /// <inheritdoc/>
     public override GameTeam? ReadJson(JsonReader reader, Type objectType, GameTeam? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
         JObject jsonObject = JObject.Load(reader);
@@ -35,6 +36,7 @@ internal class GameTeamJsonConverter : JsonConverter<GameTeam>
         }
     }
 
+    /// <inheritdoc/>
     public override void WriteJson(JsonWriter writer, GameTeam? value, JsonSerializer serializer)
     {
         throw new NotSupportedException();

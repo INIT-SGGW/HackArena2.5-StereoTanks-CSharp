@@ -14,4 +14,14 @@ public enum BulletType
     /// Double bullet type.
     /// </summary>
     Double = 1,
+
+    /// <summary>
+    /// Healing bullet type.
+    /// </summary>
+    Healing = 2,
+
+    /// <summary>
+    /// Stun bullet type.
+    /// </summary>
+    Stun = 3,
 }
