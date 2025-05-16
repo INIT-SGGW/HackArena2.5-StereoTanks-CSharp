@@ -100,6 +100,11 @@ public enum PacketType
     AbilityUse = PlayerResponseActionGroup | HasPayload | 0x3,
 
     /// <summary>
+    /// The capture zone packet type.
+    /// </summary>
+    CaptureZone = PlayerResponseActionGroup | 0x4,
+
+    /// <summary>
     /// The go to packet type.
     /// </summary>
     GoTo = PlayerResponseActionGroup | HasPayload | 0x6,
@@ -154,6 +159,11 @@ public enum PacketType
     /// The game state debug group packet type.
     /// </summary>
     GameStateDebugGroup = 0xC0,
+
+    /// <summary>
+    /// The set score packet type.
+    /// </summary>
+    SetScore = GameStateDebugGroup | HasPayload | 0x1,
 
     // Debug group (range: 0xD0 - 0xDF)
 

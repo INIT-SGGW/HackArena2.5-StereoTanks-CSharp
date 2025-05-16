@@ -20,18 +20,9 @@ public class ZoneJsonConverter : JsonConverter<Zone>
         var width = jsonObject["width"]!.ToObject<int>()!;
         var height = jsonObject["height"]!.ToObject<int>()!;
         var index = jsonObject["index"]!.ToObject<int>()!;
-        var status = jsonObject["status"]!["type"]!.ToObject<string>()!;
-        ZoneStatus zoneStatus = status switch
-        {
-            "neutral" => new Neutral()!,
-            "beingCaptured" => jsonObject["status"]!.ToObject<BeingCaptured>()!,
-            "captured" => jsonObject["status"]!.ToObject<Captured>()!,
-            "beingContested" => jsonObject["status"]!.ToObject<BeingContested>()!,
-            "beingRetaken" => jsonObject["status"]!.ToObject<BeingRetaken>()!,
-            _ => throw new NotSupportedException(),
-        };
+        var shares = jsonObject["shares"]!.ToObject<Dictionary<string, float>>()!;
 
-        return new Zone(index, x, y, width, height, zoneStatus);
+        return new Zone(index, x, y, width, height, shares);
     }
 
     /// <inheritdoc/>

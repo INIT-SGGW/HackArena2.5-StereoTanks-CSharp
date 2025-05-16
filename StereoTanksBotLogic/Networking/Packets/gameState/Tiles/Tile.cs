@@ -22,7 +22,7 @@ public record class Tile(bool IsVisible, int? ZoneIndex, Tile.TileEntity[] Entit
     /// <summary>
     /// Represents wall tile entity.
     /// </summary>
-    public record class Wall : TileEntity;
+    public record class Wall(WallType Type) : TileEntity;
 
     /// <summary>
     /// Represents enemy tank tile entity.

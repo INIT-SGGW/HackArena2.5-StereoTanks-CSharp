@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
+using StereoTanksBotLogic.JsonConverters;
 using StereoTanksBotLogic.Models;
 
-namespace StereoTanksBotLogic.JsonConverters;
+namespace StereoTanksBotLogic.Models;
 
 [JsonConverter(typeof(GameTeamJsonConverter))]
 public abstract record class GameTeam(
     string Name,
     uint Color,
-    List<GamePlayer> Players);
+    GamePlayer[] Players);

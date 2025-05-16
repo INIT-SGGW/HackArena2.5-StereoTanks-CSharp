@@ -141,4 +141,27 @@ public class BotResponse() : Packet
             Payload = JObject.FromObject(goToPayload),
         };
     }
+
+    /// <summary>
+    /// Represents capture zone response.
+    /// </summary>
+    /// <remarks>
+    /// Command the tank to attempt to capture the zone it is currently on.
+    /// This is only effective if the tank is on a capturable zone tile.
+    /// Use this method to increase your share in zone capture.
+    /// For each tick this response is used share of your team will increase by one.
+    /// If you use this method you cannot do anything else in this tick.
+    /// </remarks>
+    /// <returns>
+    /// BotResponse representing capture zone action.
+    /// </returns>
+    public static BotResponse CaptureZone()
+    {
+        CaptureZonePayload captureZonePayload = new();
+        return new BotResponse()
+        {
+            Type = captureZonePayload.Type,
+            Payload = JObject.FromObject(captureZonePayload),
+        };
+    }
 }

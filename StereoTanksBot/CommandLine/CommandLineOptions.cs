@@ -25,14 +25,14 @@ public class CommandLineOptions
     /// Gets or sets player nickname.
     /// </summary>
 
-    [Option('n', "team name", Required = true, HelpText = "Set team name.")]
+    [Option('n', "team-name", Required = true, HelpText = "Set team name.")]
     public string? TeamName { get; set; }
 
     /// <summary>
     /// Gets or sets tank type.
     /// </summary>
 
-    [Option('t', "tank type", Required = true, HelpText = "Set tank type. Possible values: light, heavy")]
+    [Option('t', "tank-type", Required = true, HelpText = "Set tank type. Possible values: light, heavy")]
     public TankType? TankType { get; set; }
 
     /// <summary>

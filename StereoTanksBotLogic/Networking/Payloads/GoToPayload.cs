@@ -5,8 +5,8 @@ namespace StereoTanksBotLogic.Networking.Payloads
     /// <summary>
     /// Represents go to payload.
     /// </summary>
-    /// <param name="direction">Represents movement direction.</param>
-    public class GoToPayload(int x, int y, Rotation? rotation, Costs costs, Penalties penalties)
+    /// <param name="turretRotation">Represents turret rotation direction.</param>
+    public class GoToPayload(int x, int y, Rotation? turretRotation, Costs costs, Penalties penalties)
     {
         /// <summary>
         /// Gets packet type.
@@ -35,7 +35,7 @@ namespace StereoTanksBotLogic.Networking.Payloads
         /// <summary>
         /// Gets the turret rotation.
         /// </summary>
-        public Rotation? TurretRotation { get; } = rotation;
+        public Rotation? TurretRotation { get; } = turretRotation;
 
         /// <summary>
         /// Gets the pathfinding costs.

@@ -1,13 +1,13 @@
 ﻿using StereoTanksBotLogic.Models;
 
-namespace StereoTanksBotLogic.JsonConverters;
+namespace StereoTanksBotLogic.Models;
 
 public record class OwnTeam(
     string Name,
     uint Color,
     int Score,
-    List<GamePlayer> Players)
+    GamePlayer[] Players)
     : GameTeam(
-        Name, 
-        Color, 
+        Name,
+        Color,
         Players);

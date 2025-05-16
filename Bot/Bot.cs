@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
+﻿using System.Runtime.InteropServices;
 using StereoTanksBotLogic;
 using StereoTanksBotLogic.Enums;
 using StereoTanksBotLogic.Models;
@@ -14,26 +13,50 @@ public class Bot : IBot
     public Bot(LobbyData lobbyData)
     {
         this.myId = lobbyData.PlayerId;
+        this.myTeamName = lobbyData.TeamName;
     }
 
     public void OnSubsequentLobbyData(LobbyData lobbyData) { }
 
     public BotResponse NextMove(GameState gameState)
     {
-        string jsonString = JsonSerializer.Serialize(gameState.Teams);
-        Console.WriteLine(jsonString);
-       
-        for (int y = 0; y < gameState.Map.GetLength(0); y++)
+        Console.WriteLine($"GameStateId: {gameState.Id}");
+        Console.WriteLine($"PlayerId: {gameState.PlayerId}");
+        Console.WriteLine($"Tick: {gameState.Tick}");
+
+        Console.WriteLine("I SEE THESE TEAMS:");
+        for (int i = 0; i < gameState.Teams.Length; i++)
         {
-            for (int x = 0; x < gameState.Map.GetLength(1); x++)
+            var team = gameState.Teams[i];
+            Console.WriteLine($"TEAM: {i}");
+            Console.WriteLine($"  Name: {team.Name}");
+            Console.WriteLine($"  Color: {team.Color}");
+
+            if(team is OwnTeam ot)
             {
-                Tile tile = gameState.Map[y, x];
-                jsonString = JsonSerializer.Serialize(tile);
-                Console.Write(y);
-                Console.Write(x);
-                Console.WriteLine(jsonString);
+                Console.WriteLine($"  Score: {ot.Score}");
+            }
+            
+            Console.WriteLine($"  Players:");
+            for (int j = 0; j < team.Players.Length; j++)
+            {
+                var player = team.Players[j];
+                if (player is OwnPlayer op)
+                {
+                    Console.WriteLine($"  OwnPlayer:");
+                    Console.WriteLine($"    Id: {op.Id}");
+                    Console.WriteLine($"    Ping: {op.Ping}");
+                    Console.WriteLine($"    TicksToRegen: {op.TicksToRegen}");
+                }
+                else if (player is EnemyPlayer ep)
+                {
+                    Console.WriteLine($"  OwnPlayer:");
+                    Console.WriteLine($"    Id: {ep.Id}");
+                    Console.WriteLine($"    Ping: {ep.Ping}");
+                }
             }
         }
+
         Console.WriteLine("Map:");
         for (int y = 0; y < gameState.Map.GetLength(0); y++)
         {
@@ -54,9 +77,16 @@ public class Bot : IBot
 
                 foreach (var entity in gameState.Map[y, x].Entities)
                 {
-                    if (entity is Tile.Wall)
+                    if (entity is Tile.Wall wall)
                     {
-                        symbol = '#';
+                        if(wall.Type == WallType.Solid)
+                        {
+                            symbol = '#';
+                        }
+                        else
+                        {
+                            symbol = 'O';
+                        }
                     }
                     else if (entity is Tile.OwnLightTank ownLightTank)
                     {
@@ -92,7 +122,7 @@ public class Bot : IBot
                     }
                     else if (entity is Tile.Bullet bullet)
                     {
-                        if (bullet.Type == BulletType.Basic)
+                        if (bullet.Type == BulletType.Stun)
                         {
                             symbol = bullet.Direction switch
                             {
@@ -103,7 +133,7 @@ public class Bot : IBot
                                 _ => throw new NotSupportedException()
                             };
                         }
-                        else
+                        else if(bullet.Type == BulletType.Double)
                         {
                             symbol = bullet.Direction switch
                             {
@@ -111,6 +141,28 @@ public class Bot : IBot
                                 Direction.Left => '⇇',
                                 Direction.Up => '⇈',
                                 Direction.Right => '⇉',
+                                _ => throw new NotSupportedException()
+                            };
+                        }
+                        else if(bullet.Type == BulletType.Stun)
+                        {
+                            symbol = bullet.Direction switch
+                            {
+                                Direction.Down => '|',
+                                Direction.Left => '-',
+                                Direction.Up => '|',
+                                Direction.Right => '-',
+                                _ => throw new NotSupportedException()
+                            };
+                        }
+                        else if (bullet.Type == BulletType.Healing)
+                        {
+                            symbol = bullet.Direction switch
+                            {
+                                Direction.Down => 'H',
+                                Direction.Left => 'H',
+                                Direction.Up => 'H',
+                                Direction.Right => 'H',
                                 _ => throw new NotSupportedException()
                             };
                         }
@@ -135,9 +187,28 @@ public class Bot : IBot
             Console.Write("\n");
         }
 
+        Console.WriteLine("ZONES:");
+        for (int i = 0; i < gameState.Zones.Length; i++)
+        {
+            var zone = gameState.Zones[i];
+            Console.WriteLine($"   X: {zone.X}");
+            Console.WriteLine($"   Y: {zone.Y}");
+            Console.WriteLine($"   Index: {zone.Index}");
+            Console.WriteLine($"   Width: {zone.Width}");
+            Console.WriteLine($"   Shares:");
+            for (int j = 0; j < zone.Shares.Count; j++)
+            {
+                var key = zone.Shares.Keys.ToList()[j];
+                var value = zone.Shares.Values.ToList()[j];
+                Console.WriteLine($"      Key: {key} Value: {value}");
+            }
+        }
+
         //Bot that randomly choses one of all possible bot responses.
         var rand = new Random();
-        return rand.Next(0, 18) switch
+        var X = rand.Next(0,22);
+        var Y = rand.Next(0,22);
+        return rand.Next(0, 19) switch
         {
             0 => BotResponse.Pass(),
             1 => BotResponse.Move(MovementDirection.Backward),
@@ -157,6 +228,8 @@ public class Bot : IBot
             15 => BotResponse.UseAbility(AbilityType.FireDoubleBullet),
             16 => BotResponse.UseAbility(AbilityType.UseLaser),
             17 => BotResponse.UseAbility(AbilityType.UseRadar),
+            18 => BotResponse.GoTo(X, Y, Rotation.Left, new(0, 0, 0), new(null, null, null, null, null, null)),
+            19 => BotResponse.CaptureZone(),
             _ => throw new NotSupportedException(),
         };
     }

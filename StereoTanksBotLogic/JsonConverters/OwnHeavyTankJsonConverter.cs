@@ -29,8 +29,8 @@ internal class OwnHeavyTankJsonConverter : JsonConverter<Tile.OwnHeavyTank>
             jsonObject["ownerId"]!.ToObject<string>()!,
             jsonObject["direction"]!.ToObject<Direction>(),
             jsonObject["turret"]!.ToObject<OwnHeavyTankTurret>()!,
-            jsonObject["health"]!.ToObject<int>(),
-            jsonObject["ticksToRegen"]!.ToObject<int>(),
+            jsonObject["health"]!.ToObject<int?>(),
+            jsonObject["ticksToMine"]!.ToObject<int?>(),
             visibility);
     }
 

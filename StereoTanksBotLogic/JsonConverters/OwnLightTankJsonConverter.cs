@@ -30,7 +30,7 @@ internal class OwnLightJsonConverter : JsonConverter<Tile.OwnLightTank>
             jsonObject["direction"]!.ToObject<Direction>(),
             jsonObject["turret"]!.ToObject<OwnLightTankTurret>()!,
             jsonObject["health"]!.ToObject<int>(),
-            jsonObject["ticksToRegen"]!.ToObject<int>(),
+            jsonObject["ticksToRadar"]!.ToObject<int?>(),
             jsonObject["isUsingRadar"]!.ToObject<bool>(),
             visibility
         );

@@ -25,14 +25,14 @@ internal class GameTeamJsonConverter : JsonConverter<GameTeam>
                 jsonObject["name"]!.ToObject<string>()!,
                 jsonObject["color"]!.ToObject<uint>()!,
                 jsonObject["score"]!.ToObject<int>()!,
-                players);
+                [.. players]);
         }
         else
         {
             return new EnemyTeam(
                 jsonObject["name"]!.ToObject<string>()!,
                 jsonObject["color"]!.ToObject<uint>()!,
-                players);
+                [.. players]);
         }
     }
 

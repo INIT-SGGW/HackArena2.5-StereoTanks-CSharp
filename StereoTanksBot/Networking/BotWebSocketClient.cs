@@ -40,7 +40,8 @@ internal class BotWebSocketClient : IDisposable
     {
         this.clientWebSocket = new ClientWebSocket();
 
-        string parsedTankType = tankType switch {
+        string parsedTankType = tankType switch
+        {
             TankType.Light => "light",
             TankType.Heavy => "heavy",
             _ => throw new NotSupportedException(),

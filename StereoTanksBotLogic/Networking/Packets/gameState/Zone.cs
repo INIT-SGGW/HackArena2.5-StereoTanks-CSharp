@@ -13,4 +13,4 @@ namespace StereoTanksBotLogic.Models;
 /// <param name="Height">Represents zone height.</param>
 /// <param name="Status">Represents zone capture status.</param>
 [JsonConverter(typeof(ZoneJsonConverter))]
-public record class Zone(int Index, int X, int Y, int Width, int Height, ZoneStatus Status);
+public record class Zone(int Index, int X, int Y, int Width, int Height, Dictionary<string, float> Shares);

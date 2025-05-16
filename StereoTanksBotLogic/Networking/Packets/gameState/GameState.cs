@@ -14,6 +14,7 @@ namespace StereoTanksBotLogic.Models;
 [JsonConverter(typeof(GameStateJsonConverter))]
 public record class GameState(
     string Id,
+    string PlayerId,
     int Tick,
     GameTeam[] Teams,
     Tile[,] Map,

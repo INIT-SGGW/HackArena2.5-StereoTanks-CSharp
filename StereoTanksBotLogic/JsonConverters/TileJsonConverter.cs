@@ -22,7 +22,8 @@ internal class TileJsonConverter : JsonConverter<Tile>
             {
                 case "wall":
                     {
-                        entities.Add(new Wall());
+                        var rawPayload = (JObject)tileEntity["payload"]!;
+                        entities.Add(rawPayload.ToObject<Wall>()!);
                         break;
                     }
 
