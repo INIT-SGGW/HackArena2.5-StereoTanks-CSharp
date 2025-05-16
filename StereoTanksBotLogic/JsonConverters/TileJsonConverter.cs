@@ -79,7 +79,7 @@ internal class TileJsonConverter : JsonConverter<Tile>
             }
         }
 
-        return new Tile(false, null, entities.ToArray());
+        return new Tile(null, entities.ToArray());
     }
 
     /// <inheritdoc/>

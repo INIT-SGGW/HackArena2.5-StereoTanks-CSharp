@@ -12,7 +12,7 @@ namespace StereoTanksBotLogic.Models;
 /// <param name="Entities">Represents entities in a tile.</param>
 
 [JsonConverter(typeof(TileJsonConverter))]
-public record class Tile(bool IsVisible, int? ZoneIndex, Tile.TileEntity[] Entities)
+public record class Tile(int? ZoneIndex, Tile.TileEntity[] Entities)
 {
     /// <summary>
     /// Represents base tile entity.

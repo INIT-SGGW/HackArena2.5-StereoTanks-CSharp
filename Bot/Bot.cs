@@ -64,15 +64,11 @@ public class Bot : IBot
             {
                 Tile tile = gameState.Map[y, x];
                 char symbol = ' ';
-                if (tile.IsVisible)
-                {
-                    symbol = '.';
-                }
 
                 if (tile.ZoneIndex != null)
                 {
                     int zoneIndex = (int)gameState.Map[y, x].ZoneIndex!;
-                    symbol = tile.IsVisible ? (char)zoneIndex : (char)(zoneIndex + 32);
+                    symbol = (char)zoneIndex;
                 }
 
                 foreach (var entity in gameState.Map[y, x].Entities)

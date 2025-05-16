@@ -34,27 +34,6 @@ internal class GameStateJsonConverter : JsonConverter<GameState>
         var rawTiles = (JArray)rawMap["tiles"]!;
         int columns = rawTiles.Count;
         int rows = rawTiles[0].Count();
-        bool[,] visibility = new bool[columns, rows];
-        for (int x = 0; x < columns; x++)
-        {
-            var columnArray = (JArray)rawTiles[x];
-
-            for (int y = 0; y < columnArray.Count; y++)
-            {
-                var tile = columnArray[y].ToObject<Tile>()!;
-                for (int z = 0; z < tile.Entities.Length; z++)
-                {
-                    if (tile.Entities[z] is Tile.OwnLightTank lightTank && lightTank.OwnerId == playerId)
-                    {
-                        visibility = lightTank.Visibility;
-                    }
-                    else if (tile.Entities[z] is Tile.OwnHeavyTank heavyTank && heavyTank.OwnerId == playerId)
-                    {
-                        visibility = heavyTank.Visibility;
-                    }
-                }
-            }
-        }
 
         var map = new Tile[rows, rows];
         for (int x = 0; x < columns; x++)
@@ -63,10 +42,9 @@ internal class GameStateJsonConverter : JsonConverter<GameState>
 
             for (int y = 0; y < columnArray.Count; y++)
             {
-                var isVisible = this.IsVisible(visibility, x, y);
                 var zoneIndex = this.ComputeZoneIndex(zones, x, y);
                 var tile = columnArray[y].ToObject<Tile>()!;
-                map[y, x] = new(isVisible, zoneIndex, tile.Entities);
+                map[y, x] = new(zoneIndex, tile.Entities);
             }
         }
 
@@ -77,11 +55,6 @@ internal class GameStateJsonConverter : JsonConverter<GameState>
     public override void WriteJson(JsonWriter writer, GameState? value, JsonSerializer serializer)
     {
         throw new NotSupportedException();
-    }
-
-    private bool IsVisible(bool[,] visibility, int x, int y)
-    {
-        return visibility[y, x] == true;
     }
 
     private int? ComputeZoneIndex(List<Zone> zones, int x, int y)
