@@ -7,10 +7,8 @@ namespace StereoTanksBotLogic.Models;
 /// <summary>
 /// Represents tile.
 /// </summary>
-/// <param name="IsVisible">Represents if tile is visible in fog of war.</param>
 /// <param name="ZoneIndex">Represents zone index in witch tile is located.</param>
 /// <param name="Entities">Represents entities in a tile.</param>
-
 [JsonConverter(typeof(TileJsonConverter))]
 public record class Tile(int? ZoneIndex, Tile.TileEntity[] Entities)
 {
@@ -50,7 +48,7 @@ public record class Tile(int? ZoneIndex, Tile.TileEntity[] Entities)
     /// <param name="Health">Represents health of player own tank.</param>
     /// <param name="TicksToRadar">Represents time in ticks to regenerate radar.</param>
     /// <param name="IsUsingRadar">Represents radar usage.</param>
-    [JsonConverter(typeof(OwnLightJsonConverter))]
+    [JsonConverter(typeof(OwnLightTankJsonConverter))]
     public record class OwnLightTank(string OwnerId, Direction Direction, OwnLightTankTurret Turret, int? Health, int? TicksToRadar, bool IsUsingRadar, bool[,] Visibility) : TileEntity;
 
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿using CommandLine;
 using CommandLine.Text;
-using MonoTanksBot.CommandLine;
-using MonoTanksBot.Networking;
+using StereoTanksBot.CommandLine;
+using StereoTanksBot.Networking;
 using StereoTanksBotLogic.Enums;
 
 string host = "localhost";

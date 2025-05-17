@@ -6,7 +6,10 @@ using StereoTanksBotLogic.Models;
 
 namespace StereoTanksBotLogic.JsonConverters;
 
-internal class OwnLightJsonConverter : JsonConverter<Tile.OwnLightTank>
+/// <summary>
+/// Represents own light tank json converter.
+/// </summary>
+internal class OwnLightTankJsonConverter : JsonConverter<Tile.OwnLightTank>
 {
     /// <inheritdoc/>
     public override Tile.OwnLightTank? ReadJson(JsonReader reader, Type objectType, Tile.OwnLightTank? existingValue, bool hasExistingValue, JsonSerializer serializer)
@@ -32,8 +35,7 @@ internal class OwnLightJsonConverter : JsonConverter<Tile.OwnLightTank>
             jsonObject["health"]!.ToObject<int>(),
             jsonObject["ticksToRadar"]!.ToObject<int?>(),
             jsonObject["isUsingRadar"]!.ToObject<bool>(),
-            visibility
-        );
+            visibility);
     }
 
     /// <inheritdoc/>

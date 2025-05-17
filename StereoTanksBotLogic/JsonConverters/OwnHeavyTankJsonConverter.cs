@@ -6,6 +6,9 @@ using StereoTanksBotLogic.Models;
 
 namespace StereoTanksBotLogic.JsonConverters;
 
+/// <summary>
+/// Represents own heavy tank json converter.
+/// </summary>
 internal class OwnHeavyTankJsonConverter : JsonConverter<Tile.OwnHeavyTank>
 {
     /// <inheritdoc/>

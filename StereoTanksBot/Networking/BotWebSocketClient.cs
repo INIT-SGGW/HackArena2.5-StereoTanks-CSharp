@@ -7,7 +7,7 @@ using StereoTanksBotLogic.Enums;
 using StereoTanksBotLogic.Models;
 using StereoTanksBotLogic.Networking;
 
-namespace MonoTanksBot.Networking;
+namespace StereoTanksBot.Networking;
 
 /// <summary>
 /// Represents custom web socket client that comunicates bot with game server.
@@ -22,11 +22,6 @@ internal class BotWebSocketClient : IDisposable
     private readonly Uri serverURI;
 
     private IBot? bot;
-
-    /// <summary>
-    /// Gets a value indicating whether connection is open or not.
-    /// </summary>
-    public bool IsConnected { get => this.clientWebSocket.State == WebSocketState.Open; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BotWebSocketClient"/> class.
@@ -56,6 +51,11 @@ internal class BotWebSocketClient : IDisposable
 
         this.serverURI = new(link.ToString());
     }
+
+    /// <summary>
+    /// Gets a value indicating whether connection is open or not.
+    /// </summary>
+    public bool IsConnected { get => this.clientWebSocket.State == WebSocketState.Open; }
 
     /// <summary>
     ///  Connects to a WebSocket server as an asynchronous operation.

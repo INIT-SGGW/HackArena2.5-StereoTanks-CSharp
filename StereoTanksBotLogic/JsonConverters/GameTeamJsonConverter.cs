@@ -5,13 +5,15 @@ using StereoTanksBotLogic.Models;
 
 namespace StereoTanksBotLogic.JsonConverters;
 
+/// <summary>
+/// Represents game team json converter.
+/// </summary>
 internal class GameTeamJsonConverter : JsonConverter<GameTeam>
 {
     /// <inheritdoc/>
     public override GameTeam? ReadJson(JsonReader reader, Type objectType, GameTeam? existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
         JObject jsonObject = JObject.Load(reader);
-
 
         List<GamePlayer> players = new();
         foreach (var player in (JArray)jsonObject["players"]!)
